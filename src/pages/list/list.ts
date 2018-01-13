@@ -47,7 +47,7 @@ export class ListPage {
    callNumber(kafalaGroupedByKafil){
   
    this.call.callNumber("07404131284", true)
-  .then(() => console.log('Launched dialer!'))
+  .then(() =>  alert("success"))
   .catch(() => console.log('Error launching dialer'));
   }
 
