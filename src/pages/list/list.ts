@@ -35,7 +35,7 @@ export class ListPage {
               //intent: '' // Sends sms without opening default sms app
             }
     }
-    this.sms.send('07405547847', 'Hello world!',options)
+    this.sms.send('07404131284', 'Hello world!',options)
       .then(()=>{
         alert("success");
       },()=>{
