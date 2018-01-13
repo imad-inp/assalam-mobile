@@ -31,7 +31,7 @@ export class ListPage {
       var options={
           replaceLineBreaks: false, // true to replace \n by a new line, false by default
           android: {
-               intent: 'INTENT'  // Opens Default sms app
+               intent: ''  // Opens Default sms app
               //intent: '' // Sends sms without opening default sms app
             }
     }
