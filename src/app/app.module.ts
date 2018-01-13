@@ -3,6 +3,9 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { HttpClientModule } from '@angular/common/http';
 
+import { SMS } from '@ionic-native/sms;
+
+
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
@@ -39,7 +42,8 @@ import { ExpandableComponent } from '../components/expandable/expandable';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthService,
-    DataServiceProvider
+    DataServiceProvider,
+    SMS
   ]
 })
 export class AppModule {}
