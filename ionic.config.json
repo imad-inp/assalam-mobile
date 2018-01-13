@@ -1,0 +1,8 @@
+{
+  "name": "assalamapp",
+  "app_id": "c12aa728",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}
