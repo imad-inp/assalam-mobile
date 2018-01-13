@@ -4,6 +4,7 @@ import { DataServiceProvider } from '../../providers/data-service/data-service';
 import { Kafala } from "../../app/data-models/kafala";
 import { Kafil } from "../../app/data-models/kafil";
 import { SMS } from '@ionic-native/sms';
+import { CallNumber } from '@ionic-native/call-number';
 
 let  apiUrl = 'http://localhost:8080/api/';
 @Component({
@@ -19,7 +20,7 @@ export class ListPage {
   kafalasPerKafil = [];
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private dataService : DataServiceProvider, private sms: SMS) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private dataService : DataServiceProvider, private sms: SMS, private call: CallNumber) {
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedItem = navParams.get('item'); 
     
@@ -41,6 +42,13 @@ export class ListPage {
       },()=>{
       alert("failed");
       });
+  }
+
+   callNumber(kafalaGroupedByKafil){
+  
+   this.call.callNumber("07404131284", true)
+  .then(() => console.log('Launched dialer!'))
+  .catch(() => console.log('Error launching dialer'));
   }
 
   getUsers() {

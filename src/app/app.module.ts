@@ -4,7 +4,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { HttpClientModule } from '@angular/common/http';
 
 import { SMS } from '@ionic-native/sms';
-
+import { CallNumber } from '@ionic-native/call-number';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -43,7 +43,8 @@ import { ExpandableComponent } from '../components/expandable/expandable';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthService,
     DataServiceProvider,
-    SMS
+    SMS,
+    CallNumber
   ]
 })
 export class AppModule {}
