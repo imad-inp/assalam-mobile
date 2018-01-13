@@ -3,7 +3,7 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { HttpClientModule } from '@angular/common/http';
 
-import { SMS } from '@ionic-native/sms;
+import { SMS } from '@ionic-native/sms';
 
 
 import { MyApp } from './app.component';
