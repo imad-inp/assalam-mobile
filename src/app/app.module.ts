@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { HttpClientModule } from '@angular/common/http';
-import { Platform } from 'ionic-angular';
+
 
 import { SMS } from '@ionic-native/sms';
 import { CallNumber } from '@ionic-native/call-number';
@@ -17,6 +17,7 @@ import { AuthService } from '../providers/auth-service/auth-service';
 import { DataServiceProvider } from '../providers/data-service/data-service';
 
 import { ExpandableComponent } from '../components/expandable/expandable';
+import { Platform } from 'ionic-angular';
 
 @NgModule({
   declarations: [
@@ -45,8 +46,9 @@ import { ExpandableComponent } from '../components/expandable/expandable';
     AuthService,
     DataServiceProvider,
     SMS,
-    CallNumber,
-    Platform
+    CallNumber
+    
+ 
   ]
 })
 export class AppModule {}

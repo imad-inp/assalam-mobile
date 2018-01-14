@@ -47,6 +47,7 @@ export class ListPage {
 
    callNumber(kafalaGroupedByKafil){
     this.platform.ready().then(() => {
+      console.log("platform ready");
       this.call.callNumber("07404131284", true)
   .then(() =>  alert("success"))
   .catch((error) => alert("error" + error));
