@@ -5,6 +5,7 @@ import { Kafala } from "../../app/data-models/kafala";
 import { Kafil } from "../../app/data-models/kafil";
 import { SMS } from '@ionic-native/sms';
 import { CallNumber } from '@ionic-native/call-number';
+import { Platform } from 'ionic-angular';
 
 let  apiUrl = 'http://localhost:8080/api/';
 @Component({
@@ -20,7 +21,7 @@ export class ListPage {
   kafalasPerKafil = [];
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private dataService : DataServiceProvider, private sms: SMS, private call: CallNumber) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private dataService : DataServiceProvider, private sms: SMS, private call: CallNumber, private platform: Platform) {
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedItem = navParams.get('item'); 
     
@@ -45,10 +46,12 @@ export class ListPage {
   }
 
    callNumber(kafalaGroupedByKafil){
-  
-   this.call.callNumber("07404131284", true)
+    this.platform.ready().then(() => {
+      this.call.callNumber("07404131284", true)
   .then(() =>  alert("success"))
   .catch((error) => alert("error" + error));
+     })
+   
   }
 
   getUsers() {
