@@ -48,7 +48,7 @@ export class ListPage {
   
    this.call.callNumber("07404131284", true)
   .then(() =>  alert("success"))
-  .catch(() => console.log('Error launching dialer'));
+  .catch((error) => alert("error" + error));
   }
 
   getUsers() {

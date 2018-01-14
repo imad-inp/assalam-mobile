@@ -26,9 +26,7 @@
     <expandable [expandHeight]="itemExpandHeight" [expanded]="kafils.expanded">
        <div *ngFor="let kafala of kafils" >
       الطفل : {{kafala.enfant.fullName}}   /
-            الشهور غير المؤدات: {{getUnpaidMonths(kafala)}}
-     
-        
+            الشهور غير المؤدات: {{getUnpaidMonths(kafala)}}      
          <hr/>
        </div>
       <button ion-button color="primary"  (click)="sendSMS()">
