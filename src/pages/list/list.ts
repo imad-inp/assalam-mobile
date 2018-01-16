@@ -37,7 +37,7 @@ export class ListPage {
               //intent: '' // Sends sms without opening default sms app
             }
     }
-    this.sms.send('07404131284', 'Hello world!',options)
+    this.sms.send(kafalaGroupedByKafil.tel, 'Hello world!',options)
       .then(()=>{
         alert("success");
       },()=>{
@@ -45,30 +45,40 @@ export class ListPage {
       });
   }
 
+  
+
    callNumber(kafalaGroupedByKafil){
     this.platform.ready().then(() => {
       console.log("platform ready");
-      (<any>window).plugins.CallNumber.callNumber("07404131284", true)
+      (<any>window).plugins.CallNumber. callNumber("07404131284", true)
   .then(() =>  alert("success"))
   .catch((error) => alert("error" + error));
      })
    
   }
 
+  /*process kafalas to group them by kafil Id
+  */
+  groupKafalasPerKafil(kafalas){
+    var tmpKafils = {};
+
+       for (var kafala of this.kafalas) {
+        if(tmpKafils[kafala.kafil.id]){
+         tmpKafils[kafala.kafil.id].push(kafala);
+       }
+       else{
+        tmpKafils[kafala.kafil.id] = [kafala];
+        }
+      }
+   this.kafalasPerKafil = Object.keys(tmpKafils).map(key=>tmpKafils[key]);
+  }
+
   getUsers() {
     this.dataService.list().subscribe(resp => {
      this.kafalas = resp;
-     var tmpKafils = {};
-    //process kafalas to group them by kafil Id
-    for (var kafala of this.kafalas) {
-      if(tmpKafils[kafala.kafil.id]){
-       tmpKafils[kafala.kafil.id].push(kafala);
-      }
-      else{
-        tmpKafils[kafala.kafil.id] = [kafala];
-      }
-}
-  this.kafalasPerKafil = Object.keys(tmpKafils).map(key=>tmpKafils[key]);
+     
+     //group kafalas per kafil
+     this.groupKafalasPerKafil(resp);
   
   });
   }
@@ -79,6 +89,8 @@ export class ListPage {
             var monthDifference = currentDate.getMonth() - kafalaDate.getMonth() + (12 * (currentDate.getFullYear() - kafalaDate.getFullYear())) + 1;
             return  Math.abs(monthDifference - kafala.moispayes);
   }
+
+
   expandItem(item){
    
         this.kafalasPerKafil.map((listItem) => {

@@ -18,16 +18,21 @@
     <ion-item-sliding *ngFor="let kafils of kafalasPerKafil"  (click)="expandItem(kafils)">
     <ion-item >
       <button ion-item>
-      
+      <div>
+            <ion-icon name="checkmark-circle"  *ngIf="kafils[0].kafil.reminders.length > 0" ></ion-icon>
+             <ion-icon name="close" *ngIf="kafils[0].kafil.reminders.length == 0"></ion-icon>
+        {{kafils[0].kafil.reminders.length}}
+      </div>
       <div class="item-note" item-end>
       {{kafils[0].kafil.nom}} {{kafils[0].kafil.prenom}} <ion-icon name="person"></ion-icon> 
       </div> 
     </button>
     <expandable [expandHeight]="itemExpandHeight" [expanded]="kafils.expanded">
-       <div *ngFor="let kafala of kafils" >
-      الطفل : {{kafala.enfant.fullName}}   /
-            الشهور غير المؤدات: {{getUnpaidMonths(kafala)}}      
-         <hr/>
+       <div *ngFor="let kafala of kafils" >     
+          <span>  الطفل : {{kafala.enfant.fullName}}   /  </span>
+           <span> الشهور غير المؤدات: {{getUnpaidMonths(kafala)}} </span>
+            <hr>
+         
        </div>
       <button ion-button color="primary"  (click)="sendSMS()">
         <ion-icon name="mail"></ion-icon>
