@@ -10,7 +10,8 @@ import { Kafala } from "../../app/data-models/kafala";
   and Angular DI.
 */
 
-let  apiUrl = 'http://108.61.198.165/api/';
+//let  apiUrl = 'http://108.61.198.165/api/';
+let  apiUrl = 'http://localhost:8080/api/';
 
 @Injectable()
 export class DataServiceProvider {

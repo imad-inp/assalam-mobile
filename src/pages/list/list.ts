@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { DataServiceProvider } from '../../providers/data-service/data-service';
+import { ReminderProvider } from '../../providers/reminder/reminder';
 import { Kafala } from "../../app/data-models/kafala";
 import { Kafil } from "../../app/data-models/kafil";
 import { SMS } from '@ionic-native/sms';
@@ -21,7 +22,8 @@ export class ListPage {
   kafalasPerKafil = [];
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private dataService : DataServiceProvider, private sms: SMS, private call: CallNumber, private platform: Platform) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private dataService : DataServiceProvider, private sms: SMS,
+   private call: CallNumber, private platform: Platform, private reminderProvider : ReminderProvider) {
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedItem = navParams.get('item'); 
     
@@ -29,24 +31,64 @@ export class ListPage {
     
   }
 
-  sendSMS(kafalaGroupedByKafil){
-      var options={
+  sendSMS(kafalasGroupedByKafil){
+      
+       this.addReminder(kafalasGroupedByKafil[0].kafil.id);
+      
+      //  this.sendNativeSms(kafalasGroupedByKafil[0].kafil.tel, message);
+      var message = this.buildSms(kafalasGroupedByKafil);
+     this.sendNativeSms(kafalasGroupedByKafil[0].kafil.tel, message, kafalasGroupedByKafil[0].kafil.id);
+    
+
+    
+  }
+
+  /*
+  add description
+  */
+  buildSms(kafalas){
+    return "Hello " + kafalas[0].kafil.nom + " " + kafalas[0].kafil.prenom + ".You have " + kafalas.length + " late kafalas to pay";
+  }
+
+  /*add description
+  */
+  sendNativeSms(tel, message, kafilId){
+     var options={
           replaceLineBreaks: false, // true to replace \n by a new line, false by default
           android: {
                intent: ''  // Opens Default sms app
               //intent: '' // Sends sms without opening default sms app
             }
     }
-    this.sms.send(kafalaGroupedByKafil.tel, 'Hello world!',options)
+
+    this.sms.send(tel, message,options)
       .then(()=>{
-        alert("success");
+        alert("SMS success ");
+        this.addReminder(kafilId);
       },()=>{
       alert("failed");
       });
+
   }
 
-  
+  /*add description
+  */
+  addReminder(kafilId){
+    var date = new Date().toISOString().split('T')[0];
+         this.reminderProvider.addReminder({
+          'date' : date,
+          'kafils': {
+            'id' : kafilId
+          }
+        }).subscribe(resp => {
+          alert("add reminder success");
+           this.getUsers();
+        });
+  }
 
+
+  /* add description
+  */
    callNumber(kafalaGroupedByKafil){
     this.platform.ready().then(() => {
       console.log("platform ready");

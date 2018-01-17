@@ -24,7 +24,7 @@ export class HomePage {
       this.loading.dismiss();
       this.data = result;
       localStorage.setItem('token', this.data.id_token);
-      console.log(this.data.id_token + 'hello token');
+    
       this.navCtrl.setRoot(ListPage);
     }, (err) => {
       this.loading.dismiss();
