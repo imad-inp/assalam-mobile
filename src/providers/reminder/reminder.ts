@@ -9,7 +9,7 @@ import { Injectable } from '@angular/core';
   and Angular DI.
 */
 
-let  apiUrl = 'http://localhost:8080/api/';
+let  apiUrl = 'http://108.61.198.165/api/';
 
 @Injectable()
 export class ReminderProvider {
