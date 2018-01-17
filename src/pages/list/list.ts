@@ -33,7 +33,7 @@ export class ListPage {
 
   sendSMS(kafalasGroupedByKafil){
       
-       this.addReminder(kafalasGroupedByKafil[0].kafil.id);
+      
       
       //  this.sendNativeSms(kafalasGroupedByKafil[0].kafil.tel, message);
       var message = this.buildSms(kafalasGroupedByKafil);
