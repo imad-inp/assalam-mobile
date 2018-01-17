@@ -1,20 +1,18 @@
 <ion-content padding>
-  <h2>جمعية السلام</h2>
+  <h2  ion-text color ="primary">جمعية السلام</h2>
   <form (submit)="doLogin()">
     <ion-item>
-      <ion-label stacked>Username</ion-label>
-      <ion-input [(ngModel)]="loginData.username" name="username" type="text" placeholder="Username" ></ion-input>
+      <ion-label stacked>اسم المستخدم</ion-label>
+      <ion-input [(ngModel)]="loginData.username" name="username" type="text" placeholder="اسم المستخدم" ></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label stacked>Password</ion-label>
-      <ion-input [(ngModel)]="loginData.password" name="password" type="password" placeholder="Password"></ion-input>
+      <ion-label stacked>كلمة المرور</ion-label>
+      <ion-input [(ngModel)]="loginData.password" name="password" type="password" placeholder="كلمة المرور"></ion-input>
     </ion-item>
     <button ion-button block type="submit">
-      Login
+      دخول
     </button>
   </form>
 
-  <button ion-button block clear (click)="register()">
-    No have an account? Register Now
-  </button>
+ 
 </ion-content>

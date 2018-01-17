@@ -9,27 +9,28 @@
 
 <ion-content>
     <ion-fab bottom right bottom>
-    <button ion-fab mini><ion-icon name="mail"></ion-icon></button>
+    <button ion-fab mini (click) = "sendSMSToAll()"><ion-icon name="mail"></ion-icon></button>
     
   </ion-fab>
   <ion-list>
    
 
-    <ion-item-sliding *ngFor="let kafils of kafalasPerKafil"  (click)="expandItem(kafils)">
+    <ion-item *ngFor="let kafils of kafalasPerKafil"  (click)="expandItem(kafils)">
     <ion-item >
       <button ion-item>
       <div>
-            <ion-icon name="checkmark-circle"  *ngIf="kafils[0].kafil.reminders.length > 0" ></ion-icon>
-             <ion-icon name="close" *ngIf="kafils[0].kafil.reminders.length == 0"></ion-icon>
-        {{kafils[0].kafil.reminders.length}}
+              <ion-icon name="mail"></ion-icon>
+        {{getRemindersSent(kafils[0].kafil.reminders)}}
       </div>
       <div class="item-note" item-end>
-      {{kafils[0].kafil.nom}} {{kafils[0].kafil.prenom}} <ion-icon name="person"></ion-icon> 
+      {{kafils[0].kafil.nom}} {{kafils[0].kafil.prenom}} <ion-icon name="person" color ="primary"></ion-icon> 
       </div> 
     </button>
     <expandable [expandHeight]="itemExpandHeight" [expanded]="kafils.expanded">
+       <span ion-text >  {{kafils[0].kafil.tel}} :  <ion-icon name="call" color="primary"></ion-icon> </span>
+       <hr>
        <div *ngFor="let kafala of kafils" >     
-          <span>  الطفل : {{kafala.enfant.fullName}}   /  </span>
+          <span>  <span ion-text color="primary"> الطفل : </span> {{kafala.enfant.fullName}}   /  </span>
            <span> الشهور غير المؤدات: {{getUnpaidMonths(kafala)}} </span>
             <hr>
          
@@ -38,7 +39,7 @@
         <ion-icon name="mail"></ion-icon>
        
       </button>
-      <button ion-button color="secondary" (click)="callNumber()">
+      <button ion-button color="danger">
         <ion-icon name="call"></ion-icon>
       
       </button>
@@ -50,12 +51,12 @@
      
     </ion-item-options>
     <ion-item-options side="right">
-      <button ion-button color="primary">
+      <button ion-button color="primary" (click) ="sendSMSToAll()" >
         <ion-icon name="mail"></ion-icon>
         Email
       </button>
     </ion-item-options>
-  </ion-item-sliding>
+  </ion-item>
   </ion-list>
   <div *ngIf="selectedItem" padding>
     You navigated here from <b>{{selectedItem.title}}</b>

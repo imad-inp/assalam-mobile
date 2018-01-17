@@ -19,6 +19,7 @@ export class ListPage {
   kafalas: Kafala[];
   itemExpandHeight: number = 110;
   loading : any;
+  currentDate : Date = new Date();
 
   kafalasPerKafil = [];
 
@@ -33,20 +34,39 @@ export class ListPage {
     
   }
 
- 
-  sendSMS(kafalasGroupedByKafil){  
+ sendSMSToAll(){
+   for(let kafalas of this.kafalasPerKafil){
+     if(this.getRemindersSent(kafalas[0].kafil.reminders) == 0 )
+     this.sendSMS(kafalas);
+   }
+ }
+  sendSMS(kafalasGroupedByKafil){
+    if(!this.validateNumber(kafalasGroupedByKafil[0].kafil.tel) ) {
+       this.presentToast("المرجو التاكد من رقم الهاتف");
+    }
       
-      //  this.sendNativeSms(kafalasGroupedByKafil[0].kafil.tel, message);
-       this.showLoader();
+   else{
+     this.showLoader();
       var message = this.buildSms(kafalasGroupedByKafil);
+      console.log(message);
      this.sendNativeSms(kafalasGroupedByKafil[0].kafil.tel, message, kafalasGroupedByKafil[0].kafil.id);
+   }
+      
   }
 
   /*
   add description
   */
   buildSms(kafalas){
-    return "Hello " + kafalas[0].kafil.nom + " " + kafalas[0].kafil.prenom + ".You have " + kafalas.length + " late kafalas to pay";
+  return  "السلام عليكم سيد(ة) " +  kafalas[0].kafil.prenom + kafalas[0].kafil.nom + ".لديكم " + kafalas.length + " كفالات متاخرة الدفع، المرجو الاتصال بجمعية السلام لتسوية وضعيتكم. جزاكم الله خيرا.  ";
+ 
+  }
+
+   /*
+  add description
+  */
+  validateNumber(tel){
+    return tel != null && tel.match(/^0.*/) && tel.length == 10;
   }
 
   /*add description
@@ -63,11 +83,11 @@ export class ListPage {
     
     this.sms.send(tel, message,options)
       .then(()=>{
-       this.presentToast("success");
+       this.presentToast("تم ارسال التذكير بنجاح");
         this.addReminder(kafilId);
       },()=>{
          this.loading.dismiss();
-      this.presentToast("failed");
+      this.presentToast("نعتذر، لم نتمكن من ارسال التذكير");
       });
 
   }
@@ -82,7 +102,6 @@ export class ListPage {
             'id' : kafilId
           }
         }).subscribe(resp => {
-          alert("add reminder success");
            this.getUsers();
         });
   }
@@ -133,6 +152,15 @@ export class ListPage {
             return  Math.abs(monthDifference - kafala.moispayes);
   }
 
+  getRemindersSent(reminders){
+    var count = 0;
+    for(let reminder of reminders){
+      var date = new Date(reminder.date);
+      if(date.getMonth == this.currentDate.getMonth )
+        count++;
+    }
+    return count;
+  }
 
   expandItem(item){
    

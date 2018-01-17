@@ -28,7 +28,7 @@ export class HomePage {
       this.navCtrl.setRoot(ListPage);
     }, (err) => {
       this.loading.dismiss();
-      this.presentToast(err);
+      this.presentToast('لم نتمكن من التحقق من هويتكم، المرجو اعادة المحاولة');
     });
   }
 
@@ -36,7 +36,7 @@ export class HomePage {
 
   showLoader(){
     this.loading = this.loadingCtrl.create({
-        content: 'Authenticating...'
+        content: 'جاري تسجيل الدخول ...'
     });
 
     this.loading.present();

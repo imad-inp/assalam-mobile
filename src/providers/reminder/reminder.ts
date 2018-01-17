@@ -9,7 +9,7 @@ import { Injectable } from '@angular/core';
   and Angular DI.
 */
 
-let  apiUrl = 'http://108.61.198.165/api/';
+let  apiUrl =   localStorage.getItem('apiAddress') ? localStorage.getItem('apiAddress') :'http://108.61.198.165/api/';
 
 @Injectable()
 export class ReminderProvider {
