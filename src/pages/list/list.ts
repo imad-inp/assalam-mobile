@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ToastController } from 'ionic-angular';
 import { DataServiceProvider } from '../../providers/data-service/data-service';
 import { ReminderProvider } from '../../providers/reminder/reminder';
 import { Kafala } from "../../app/data-models/kafala";
@@ -23,7 +23,7 @@ export class ListPage {
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private dataService : DataServiceProvider, private sms: SMS,
-   private call: CallNumber, private platform: Platform, private reminderProvider : ReminderProvider) {
+   private call: CallNumber, private platform: Platform, private reminderProvider : ReminderProvider, private toastCtrl: ToastController) {
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedItem = navParams.get('item'); 
     
@@ -31,9 +31,8 @@ export class ListPage {
     
   }
 
-  sendSMS(kafalasGroupedByKafil){
-      
-      
+ 
+  sendSMS(kafalasGroupedByKafil){  
       
       //  this.sendNativeSms(kafalasGroupedByKafil[0].kafil.tel, message);
       var message = this.buildSms(kafalasGroupedByKafil);
@@ -53,6 +52,7 @@ export class ListPage {
   /*add description
   */
   sendNativeSms(tel, message, kafilId){
+
      var options={
           replaceLineBreaks: false, // true to replace \n by a new line, false by default
           android: {
@@ -63,10 +63,10 @@ export class ListPage {
 
     this.sms.send(tel, message,options)
       .then(()=>{
-        alert("SMS success ");
+       this.presentToast("success");
         this.addReminder(kafilId);
       },()=>{
-      alert("failed");
+      this.presentToast("failed");
       });
 
   }
@@ -146,8 +146,15 @@ export class ListPage {
             return listItem;
  
         });
- 
     }
 
-  
+  presentToast(msg) {
+    let toast = this.toastCtrl.create({
+      message: msg,
+      duration: 3000,
+      position: 'top',
+      dismissOnPageChange: true
+    });
+   toast.present();
+}
 }
