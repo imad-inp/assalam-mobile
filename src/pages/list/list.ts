@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ToastController } from 'ionic-angular';
+import { NavController, NavParams, ToastController, LoadingController} from 'ionic-angular';
 import { DataServiceProvider } from '../../providers/data-service/data-service';
 import { ReminderProvider } from '../../providers/reminder/reminder';
 import { Kafala } from "../../app/data-models/kafala";
@@ -18,12 +18,14 @@ export class ListPage {
   icons: string[];
   kafalas: Kafala[];
   itemExpandHeight: number = 110;
+  loading : any;
 
   kafalasPerKafil = [];
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private dataService : DataServiceProvider, private sms: SMS,
-   private call: CallNumber, private platform: Platform, private reminderProvider : ReminderProvider, private toastCtrl: ToastController) {
+   private call: CallNumber, private platform: Platform, private reminderProvider : ReminderProvider, private toastCtrl: ToastController,
+   public loadingCtrl: LoadingController) {
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedItem = navParams.get('item'); 
     
@@ -35,11 +37,9 @@ export class ListPage {
   sendSMS(kafalasGroupedByKafil){  
       
       //  this.sendNativeSms(kafalasGroupedByKafil[0].kafil.tel, message);
+       this.showLoader();
       var message = this.buildSms(kafalasGroupedByKafil);
      this.sendNativeSms(kafalasGroupedByKafil[0].kafil.tel, message, kafalasGroupedByKafil[0].kafil.id);
-    
-
-    
   }
 
   /*
@@ -60,12 +60,13 @@ export class ListPage {
               //intent: '' // Sends sms without opening default sms app
             }
     }
-
+    
     this.sms.send(tel, message,options)
       .then(()=>{
        this.presentToast("success");
         this.addReminder(kafilId);
       },()=>{
+         this.loading.dismiss();
       this.presentToast("failed");
       });
 
@@ -147,6 +148,15 @@ export class ListPage {
  
         });
     }
+
+  showLoader(){
+    this.loading = this.loadingCtrl.create({
+        content: 'Sending SMS...'
+    });
+
+    this.loading.present();
+  }
+
 
   presentToast(msg) {
     let toast = this.toastCtrl.create({
