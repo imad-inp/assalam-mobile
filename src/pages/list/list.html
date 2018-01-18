@@ -16,7 +16,7 @@
    
 
     <ion-item *ngFor="let kafils of kafalasPerKafil"  (click)="expandItem(kafils)">
-    <ion-item >
+    
       <button ion-item>
       <div>
               <ion-icon name="mail"></ion-icon>
@@ -28,7 +28,7 @@
     </button>
     <expandable [expandHeight]="itemExpandHeight" [expanded]="kafils.expanded">
        <span ion-text >  {{kafils[0].kafil.tel}} :  <ion-icon name="call" color="primary"></ion-icon> </span>
-       <hr>
+  
        <div *ngFor="let kafala of kafils" >     
           <span>  <span ion-text color="primary"> الطفل : </span> {{kafala.enfant.fullName}}   /  </span>
            <span> الشهور غير المؤدات: {{getUnpaidMonths(kafala)}} </span>
@@ -46,16 +46,9 @@
    </expandable>
 
       
-    </ion-item>
-    <ion-item-options side="left">
-     
-    </ion-item-options>
-    <ion-item-options side="right">
-      <button ion-button color="primary" (click) ="sendSMSToAll()" >
-        <ion-icon name="mail"></ion-icon>
-        Email
-      </button>
-    </ion-item-options>
+   
+    
+    
   </ion-item>
   </ion-list>
   <div *ngIf="selectedItem" padding>
