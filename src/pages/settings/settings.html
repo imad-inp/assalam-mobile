@@ -7,24 +7,24 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>settings</ion-title>
-     <button ion-button menuToggle>
+    <button ion-button menuToggle end>
       <ion-icon name="menu"></ion-icon>
     </button>
+     <ion-title text-right>الاعدادات</ion-title>
   </ion-navbar>
 
 </ion-header>
 
-
 <ion-content padding>
+  <ion-label text-right>عنوان الموقع</ion-label>
+  <ion-item text-right>
+    
+    <ion-input type="text" [(ngModel)]="apiAddress" text-right></ion-input>
+     
+  </ion-item>
 
-  <ion-item>
-   <button ion-button (click) ="saveApiAddress()">
+  <button ion-button (click) ="saveApiAddress()">
       حفظ
     </button>
-    
-    <ion-input type="text" [(ngModel)]="apiAddress"></ion-input>
-     <ion-label text-right>عنوان الموقع</ion-label>
-  </ion-item>
 
 </ion-content>

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ToastController, LoadingController} from 'ionic-angular';
+import { NavController, NavParams, ToastController, LoadingController, AlertController} from 'ionic-angular';
 import { DataServiceProvider } from '../../providers/data-service/data-service';
 import { ReminderProvider } from '../../providers/reminder/reminder';
 import { Kafala } from "../../app/data-models/kafala";
@@ -20,13 +20,13 @@ export class ListPage {
   itemExpandHeight: number = 110;
   loading : any;
   currentDate : Date = new Date();
-
+  kafilsWithoutReminders = 0;
   kafalasPerKafil = [];
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private dataService : DataServiceProvider, private sms: SMS,
    private call: CallNumber, private platform: Platform, private reminderProvider : ReminderProvider, private toastCtrl: ToastController,
-   public loadingCtrl: LoadingController) {
+   public loadingCtrl: LoadingController, private alertCtrl: AlertController) {
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedItem = navParams.get('item'); 
     
@@ -35,6 +35,10 @@ export class ListPage {
   }
 
  sendSMSToAll(){
+   this.presentAlert();
+ }
+
+ confirmSendSMSToAll(){
    for(let kafalas of this.kafalasPerKafil){
      if(this.getRemindersSent(kafalas[0].kafil.reminders) == 0 )
      this.sendSMS(kafalas);
@@ -110,12 +114,16 @@ export class ListPage {
   /* add description
   */
    callNumber(kafalaGroupedByKafil){
-    this.platform.ready().then(() => {
-      console.log("platform ready");
-      (<any>window).plugins.CallNumber. callNumber("07404131284", true)
-  .then(() =>  alert("success"))
-  .catch((error) => alert("error" + error));
-     })
+      if(!this.validateNumber(kafalaGroupedByKafil[0].kafil.tel) ) {
+       this.presentToast("المرجو التاكد من رقم الهاتف");
+    }
+   else{
+      
+       var link = document.createElement("a");
+       link.setAttribute("href", "tel:" +  kafalaGroupedByKafil[0].kafil.tel);
+       link.click();
+    }
+    
    
   }
 
@@ -141,8 +149,21 @@ export class ListPage {
      
      //group kafalas per kafil
      this.groupKafalasPerKafil(resp);
+
+     //calculate the number of kafils without reminder for the current month 
+     this.calculateKafilsWithoutReminders();
   
   });
+  }
+
+
+  calculateKafilsWithoutReminders(){
+    
+    for(let kafalas of this.kafalasPerKafil){
+        if(this. getRemindersSent(kafalas[0].kafil.reminders) == 0){
+          this.kafilsWithoutReminders ++;
+        }
+    }
   }
 
   getUnpaidMonths(kafala : Kafala){
@@ -177,6 +198,8 @@ export class ListPage {
         });
     }
 
+
+
   showLoader(){
     this.loading = this.loadingCtrl.create({
         content: 'Sending SMS...'
@@ -194,5 +217,28 @@ export class ListPage {
       dismissOnPageChange: true
     });
    toast.present();
+}
+
+presentAlert() {
+  let alert = this.alertCtrl.create({
+    title: ' ارسال التذكيرات ',
+    subTitle: '  الى' + this.kafilsWithoutReminders +  ' كفيل؟ ',
+  
+     buttons: [
+      {
+        text: 'نعم',
+        handler: data => {
+         this.confirmSendSMSToAll();
+        }
+      },
+      {
+        text: 'لا',
+        handler: data => {
+         
+        }
+      }
+    ] 
+  });
+  alert.present();
 }
 }

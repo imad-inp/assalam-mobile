@@ -23,7 +23,7 @@ export class MyApp {
     // used for an example of ngFor and navigation
     this.pages = [
      
-      { title: 'لائحة الكفالات المتاخرة', component: ListPage },
+      { title: ' لائحة الكفلاء المتأخري الدفع', component: ListPage },
       { title: 'الاعدادات', component: SettingsPage }
     ];
 

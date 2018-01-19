@@ -1,15 +1,16 @@
 <ion-header>
   <ion-navbar>
-    <button ion-button menuToggle>
+    <button ion-button menuToggle end>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>الكفالات المتأخرة</ion-title>
+    
+    <ion-title text-right> {{kafalasPerKafil.length}} لائحة الكفلاء المتأخري الدفع</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-    <ion-fab bottom right bottom>
-    <button ion-fab mini (click) = "sendSMSToAll()"><ion-icon name="mail"></ion-icon></button>
+    <ion-fab bottom center bottom >
+    <button ion-fab mini (click) = "sendSMSToAll()" color="danger"><ion-icon name="mail"></ion-icon></button>
     
   </ion-fab>
   <ion-list>
@@ -39,10 +40,11 @@
         <ion-icon name="mail"></ion-icon>
        
       </button>
-      <button ion-button color="danger">
-        <ion-icon name="call"></ion-icon>
+      <button ion-button color="danger"  (click)="callNumber(kafils)">
+      <ion-icon name="call"></ion-icon>
       
       </button>
+      
    </expandable>
 
       
