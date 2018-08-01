@@ -14,7 +14,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'settings.html',
 })
 export class SettingsPage {
-  apiAddress : string = localStorage.getItem('apiAddress');
+  apiAddress : string = 'assalamsettat.com:8080';
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
