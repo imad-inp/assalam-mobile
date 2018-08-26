@@ -11,7 +11,7 @@ import { ListPage } from '../list/list';
 export class HomePage {
 
   loading: any;
-  loginData = { username:'', password:'' };
+  loginData = { username: localStorage.getItem('username') ?  localStorage.getItem('username'): '', password: localStorage.getItem('password') ?  localStorage.getItem('password'): '' };
   data: any;
 
   constructor(public navCtrl: NavController, public authService: AuthService,  public loadingCtrl: LoadingController, private toastCtrl: ToastController) {
@@ -20,6 +20,8 @@ export class HomePage {
 
   doLogin() {
     this.showLoader();
+    localStorage.setItem('username', this.loginData.username);
+    localStorage.setItem('password', this.loginData.password);
     this.authService.authenticate(this.loginData).then((result) => {
       this.loading.dismiss();
       this.data = result;
