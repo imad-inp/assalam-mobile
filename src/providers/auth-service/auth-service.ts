@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core';
   See https://angular.io/guide/dependency-injection for more info on providers
   and Angular DI.
 */
-let  apiUrl =   localStorage.getItem('apiAddress') ? localStorage.getItem('apiAddress') :'http://108.61.198.165/api/';
+let  apiUrl =   localStorage.getItem('apiAddress') ? localStorage.getItem('apiAddress') :'http://admin.assalamsettat.com/api/';
 @Injectable()
 export class AuthService {
  
