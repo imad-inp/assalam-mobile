@@ -177,7 +177,7 @@ export class ListPage {
     var count = 0;
     for(let reminder of reminders){
       var date = new Date(reminder.date);
-      if(date.getMonth == this.currentDate.getMonth )
+      if(date.getMonth() == this.currentDate.getMonth() )
         count++;
     }
     return count;
