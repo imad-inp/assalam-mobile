@@ -62,7 +62,7 @@ export class ListPage {
   add description
   */
   buildSms(kafalas){
-  return  "السلام عليكم سيد(ة) " +  kafalas[0].kafil.prenom + kafalas[0].kafil.nom + ".لديكم " + kafalas.length + " كفالات متاخرة الدفع، المرجو الاتصال بجمعية السلام لتسوية وضعيتكم. جزاكم الله خيرا.  ";
+  return  "السلام عليكم سيد(ة) " +  kafalas[0].kafil.prenom + kafalas[0].kafil.nom + ".لديكم " + kafalas.length + " كفالات متاخرة الدفع، المرجو الاتصال بمؤسسة السلام لتسوية وضعيتكم. جزاكم الله خيرا.  ";
  
   }
 
