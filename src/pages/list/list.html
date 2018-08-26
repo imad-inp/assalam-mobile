@@ -31,7 +31,7 @@
        <span ion-text >  {{kafils[0].kafil.tel}} :  <ion-icon name="call" color="primary"></ion-icon> </span>
   
        <div *ngFor="let kafala of kafils" >     
-          <span>  <span ion-text color="primary"> الطفل : </span> {{kafala.enfant.fullName}}   /  </span>
+          <span>  <span ion-text color="primary"> الطفل : </span> {{kafala.enfant? kafala.enfant.fullName : ''}}   /  </span>
            <span> الشهور غير المؤدات: {{getUnpaidMonths(kafala)}} </span>
             <hr>
          
